@@ -4,7 +4,7 @@ const productionSchema = newSchema(
   {
     production_type: {
       type: String,
-      enum: ["Director", "Production Team", "other"],
+      enum: ["director", "production team", "other"],
       required: true,
     },
     production_name: {
@@ -36,7 +36,6 @@ const productionSchema = newSchema(
   },
   { timestamps: true }
 );
-
 
 const production = mongoose.model("production", productionSchema);
 export default production;

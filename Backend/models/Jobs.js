@@ -23,3 +23,5 @@ const jobSchema = newSchema({
     default: Date.now,
   },
 });
+
+module.exports = mongoose.model("Jobs",jobSchema);
