@@ -56,7 +56,7 @@ exports.withdrawApplication = async (req, res) => {
 };
 
 // Get Applications for a specific Job(for Directors)
-exports.getApplivationsForJob = async (req, res) => {
+exports.getApplicationsForJob = async (req, res) => {
   try {
     const { jobId } = req.params;
     const applications = await JobApplication.find({ job: jobId }).populate(
