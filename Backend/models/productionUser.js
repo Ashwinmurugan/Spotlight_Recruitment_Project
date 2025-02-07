@@ -23,6 +23,10 @@ const productionSchema = newSchema(
       required: false,
       match: /^[0-9]{10}$/,
     },
+    bio: {
+      type: String,
+      maxlength: 1500,
+    },
     license: {
       type: String,
       default: null,
