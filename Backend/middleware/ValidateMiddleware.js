@@ -1,7 +1,6 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult } from "express-validator";
 
-// Middleware for validating login input
-exports.validateLogin = [
+export const validateLogin = [
   body("email").isEmail().withMessage("Invalid email format"),
   body("password")
     .isLength({ min: 8, max: 16 })
@@ -15,8 +14,7 @@ exports.validateLogin = [
   },
 ];
 
-// Middleware for validating actor profile update
-exports.validateActorProfile = [
+export const validateActorProfile = [
   body("bio")
     .optional()
     .isLength({ max: 1500 })
@@ -38,8 +36,7 @@ exports.validateActorProfile = [
   },
 ];
 
-// Middleware for validating production registration
-exports.validateProductionRegistration = [
+export const validateProductionRegistration = [
   body("production_name").notEmpty().withMessage("Name is required"),
   body("bio").notEmpty().withMessage("Bio is required"),
   body("license").optional().withMessage("License may required"),

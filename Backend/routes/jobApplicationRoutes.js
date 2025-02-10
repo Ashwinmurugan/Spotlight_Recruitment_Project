@@ -1,31 +1,32 @@
-const express = require("express");
-const router = express.Router();
-const JobApplicationController = require("../controllers/JobApplicationController");
-const authMiddleware = require("../middleware/AuthMiddleware");
-const roleMiddleware = require("../middleware/RoleMiddleware");
+import { Router } from "express";
+import {
+  applyForJob,
+  withdrawApplication,
+  getApplicationsForJob,
+} from "../controllers/JobApplicationController.js"; 
+import authenticateUser from "../middleware/AuthMiddleware.js"; 
+
+import roleMiddleware from "../middleware/RoleMiddleware.js"; 
+
+const router = Router();
 
 // Apply for a Job (Only Actor)
-router.post(
-  "/apply",
-  authMiddleware,
-  roleMiddleware("actor"),
-  JobApplicationController.applyForJob
-);
+router.post("/apply", authenticateUser, roleMiddleware("actor"), applyForJob);
 
 // Withdraw Job Application (Only Actor)
 router.delete(
   "/withdraw/:applicationId",
-  authMiddleware,
-  roleMiddleware("actor"),
-  JobApplicationController.withdrawApplication
+  authenticateUser,
+  roleMiddleware(["actor"]),
+  withdrawApplication
 );
 
 // Get Applications for a Job (Only for Director)
 router.get(
   "/job/:jobId",
-  authMiddleware,
-  roleMiddleware("director"),
-  JobApplicationController.getApplicationsForJob
+  authenticateUser,
+  roleMiddleware(["director"]),
+  getApplicationsForJob
 );
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const jobSchema = newSchema({
+const jobSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -24,4 +24,5 @@ const jobSchema = newSchema({
   },
 });
 
-module.exports = mongoose.model("Jobs",jobSchema);
+const Job = mongoose.model("Jobs", jobSchema);
+export default Job;  

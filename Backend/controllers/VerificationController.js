@@ -1,13 +1,14 @@
-const Production = require("../models/Production");
+import ProductionUser from "../models/productionUser.js"; 
 
 // Automatic Verification
-exports.verifyDirector = async (req, res) => {
+export default async function verifyDirector(req, res) {
   try {
     const { id } = req.user; // Assuming user is authenticated
 
-    const director = await Production.findById(id);
-    if (!director)
+    const director = await ProductionUser.findById(id);
+    if (!director) {
       return res.status(404).json({ message: "Director not found" });
+    }
 
     // Check if all required fields are present
     if (
@@ -31,4 +32,4 @@ exports.verifyDirector = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });
   }
-};
+}

@@ -1,6 +1,6 @@
-const mongoose = new require("mongoose");
+import mongoose from 'mongoose';
 
-const productionSchema = newSchema(
+const productionSchema = new mongoose.Schema(
   {
     production_type: {
       type: String,
@@ -41,5 +41,5 @@ const productionSchema = newSchema(
   { timestamps: true }
 );
 
-const production = mongoose.model("production", productionSchema);
-export default production;
+const ProductionUser = mongoose.model("ProductionUser", productionSchema);
+export default ProductionUser;

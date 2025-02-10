@@ -1,17 +1,19 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const LoginInfo = require("../models/LoginInfo");
-const Actor = require("../models/actorUser");
-const Production = require("../models/productionUser");
-const { default: production } = require("../models/productionUser");
-require("dotenv").config();
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import LoginInfo from "../models/LoginInfo.js"; 
+import Actor from "../models/actorUser.js";
+import Production from "../models/productionUser.js";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 // Register New Actor and Directors!
-exports.registerUser = async (req, res) => {
+export  async function registerUser(req, res) {
   try {
     const { name, email, phone, password, role } = req.body;
 
     const existingUser = await LoginInfo.findOne({ email });
+
     if (existingUser)
       return res.status(400).json({ message: "User Already Exists" });
 
@@ -37,47 +39,46 @@ exports.registerUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server Error !! Try later", error });
   }
-};
+}
 
 // Login User!
-exports.loginUser = async (req, res) => {
+export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
 
-    const user = await LoginInfo.findOne({ email });
+    const user = await findOne({ email });
     if (!user)
       return res.status(400).json({ message: "Invalid Credentials !!" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, hashedPassword);
     if (!isMatch)
       return res
         .status(400)
         .json({ message: "Invalid Credentials! Incorrect Password" });
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
+        const token = jwt.sign(
+          { id: user._id, role: user.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
     res
       .status(200)
       .json({ message: "Login Successfully!!", token, role: user.role });
   } catch (error) {
     res.status(500).json({ message: "Server Error!!", error });
   }
-};
+}
 
 // Get Profile For Navigating
-exports.getProfile = async (req, res) => {
+export async function getProfile(req, res) {
   try {
     const { id, role } = req.user;
     let userProfile;
 
     if (role === "actor")
-      userProfile = await Actor.findOne({ email: req.user.email });
+      userProfile = await _findOne({ email: req.user.email });
     else if (role === "director")
-      userProfile = await Production.findOne({ email: req.user.email });
+      userProfile = await __findOne({ email: req.user.email });
     else return res.status(400).json({ message: "Invalid role" });
 
     if (!userProfile)
@@ -87,4 +88,4 @@ exports.getProfile = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });
   }
-};
+}

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const jobApplicationSchema = newSchema(
+const jobApplicationSchema = new mongoose.Schema(
   {
     jobId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -17,9 +17,9 @@ const jobApplicationSchema = newSchema(
       default: Date.now,
     },
     deadline: {
-        type: Date,
-        required: true,
-      },
+      type: Date,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["Pending", "Shortlisted", "Rejected", "Selected"],
@@ -33,4 +33,4 @@ const jobApplicationSchema = newSchema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("JobApplication", jobApplicationSchema);
+export default mongoose.model("JobApplication", jobApplicationSchema);

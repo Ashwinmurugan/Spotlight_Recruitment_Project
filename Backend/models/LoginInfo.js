@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import { Schema, model,mongoose } from "mongoose";
 
 const LoginInfoSchema = new mongoose.Schema(
   {
@@ -17,7 +17,7 @@ const LoginInfoSchema = new mongoose.Schema(
       required: true,
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       refPath: "role",
     },
@@ -26,4 +26,4 @@ const LoginInfoSchema = new mongoose.Schema(
 );
 
 const LoginInfo = mongoose.model("LoginInfo", LoginInfoSchema);
-module.exports = LoginInfo;
+export default LoginInfo;

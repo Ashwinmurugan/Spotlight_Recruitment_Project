@@ -1,7 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const verificationController = require("../controllers/VerificationController");
-const authMiddleware = require("../middleware/AuthMiddleware");
-const roleMiddleware = require("../middleware/RoleMiddleware");
+import express from "express";
+import authenticateUser from "../middleware/AuthMiddleware.js"; 
+import roleMiddleware from "../middleware/RoleMiddleware.js";  
+import verifyDirector from "../controllers/VerificationController.js";
 
-router.post("/request",authMiddleware,roleMiddleware("director"),verificationController.verifyDirector)
+const router = express.Router();
+
+router.post(
+  "/request",
+  authenticateUser,   
+  roleMiddleware(["director"]),
+  verifyDirector
+);
+
+
+export default router;
