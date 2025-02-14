@@ -23,7 +23,6 @@ const actorSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      match: /^(?=.*[^\w\d\s]).{8,16}$/,
     },
     age: {
       type: Number,
